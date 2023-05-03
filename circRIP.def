@@ -6,7 +6,6 @@ Stage: build
     mkdir ${SINGULARITY_ROOTFS}/inputdata
     mkdir ${SINGULARITY_ROOTFS}/result
     mkdir ${SINGULARITY_ROOTFS}/reference
-    mkdir ${SINGULARITY_ROOTFS}/circRIP
     
 %files
     ./conda_env.yml /
@@ -39,7 +38,6 @@ Stage: build
     echo "conda activate circRIP" >> $SINGULARITY_ENVIRONMENT
     
     # download circRIP
-    cd circRIP
     git clone https://github.com/bioinfolabwhu/circRIP.git
     
     NOW=`date`

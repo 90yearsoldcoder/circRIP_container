@@ -17,7 +17,7 @@ Build the container using fakeroot mode
 ```bash
 git clone git@github.com:90yearsoldcoder/circRIP_container.git
 cd circRIP_container
-singularity build --fakeroot cirRIP.sif circRIP.def
+singularity build --fakeroot circRIP.sif circRIP.def
 ```
 
 
