@@ -1,0 +1,9 @@
+/inputdata/
+/result/
+/reference/
+/*.sif
+tmp.sh
+*.qsub.e*
+*.qsub.o*
+*.qsub.pe*
+*.qsub.po*
