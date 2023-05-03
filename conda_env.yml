@@ -1,0 +1,21 @@
+name: circRIP
+channels:
+  - bioconda
+  - bioinfo
+  - conda-forge
+  - defaults
+  - pipeliner
+
+dependencies:
+  - python
+  - numpy
+  - pysam=0.14.1
+  - pandas=1.0.3
+  - subread=1.6.1
+  - ucsc-gtftogenepred
+  - ucsc-genepredtogtf
+  - bowtie2=2.4.2
+  - bedtools=2.26.0
+  - pip
+  - git
+  

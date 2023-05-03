@@ -1,0 +1,96 @@
+Bootstrap: library
+From: ubuntu:18.04
+Stage: build
+
+%setup
+    mkdir ${SINGULARITY_ROOTFS}/inputdata
+    mkdir ${SINGULARITY_ROOTFS}/result
+    mkdir ${SINGULARITY_ROOTFS}/reference
+    mkdir ${SINGULARITY_ROOTFS}/circRIP
+    
+%files
+    ./conda_env.yml /
+
+%environment
+    export LISTEN_PORT=12345
+    export LC_ALL=C
+    export PATH=/miniconda3/bin:$PATH
+
+%post
+    apt-get update && apt-get install -y netcat
+    apt-get update && apt-get install -y automake build-essential bzip2 wget git default-jre unzip
+
+    # Install miniconda 
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    bash Miniconda3-latest-Linux-x86_64.sh -b -f -p /miniconda3/
+    rm Miniconda3-latest-Linux-x86_64.sh
+    
+    # pull the conda functions in . /miniconda3/etc/profile.d/conda.sh and make pip, etc. available while in %post
+    export PATH="/miniconda3/bin:$PATH" >> $SINGULARITY_ENVIRONMENT
+    
+    # Use conda to install pip, numpy and other dependencies
+    conda env create -f conda_env.yml
+    
+    # Help conda resolving Python "import" 
+    # conda update --all
+    
+    # make sure the conda env is activated whenever I use the container
+    echo ". /miniconda3/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+    echo "conda activate circRIP" >> $SINGULARITY_ENVIRONMENT
+    
+    # download circRIP
+    cd circRIP
+    git clone https://github.com/bioinfolabwhu/circRIP.git
+    
+    NOW=`date`
+    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+    echo "Inputdata Name: ${1}"
+    
+    # check conda environment
+    conda env list
+    
+    # activate conda environment
+    # source activate circRIP
+    # echo "Conda environment ready"
+
+%startscript
+    nc -lp $LISTEN_PORT
+
+%test
+    echo "Starting test section"
+    grep -q NAME=\"Ubuntu\" /etc/os-release
+    if [ $? -eq 0 ]; then
+        echo "Container base is Ubuntu as expected."
+    else
+        echo "Container base is not Ubuntu."
+        exit 1
+    fi
+    
+    # check the conda env
+    conda env list
+    echo "Test done"
+
+%labels
+    Name circRIP_container
+    Author minty@bu.edu
+    Version v0.1.0
+    DATE May/02/2023
+
+%help
+    This is a container for circRIP
+    Preparation:
+
+    
+    Run:
+
+    
+    Output:
+        
+    github of definition file:
+    
+    Singularity library:
+    
