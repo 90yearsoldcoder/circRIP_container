@@ -19,3 +19,11 @@ git clone git@github.com:90yearsoldcoder/circRIP_container.git
 cd circRIP_container
 singularity build --fakeroot cirRIP.sif circRIP.def
 ```
+
+
+# Run container in SHELL mode(for developer)
+It is used for debugging and debuging only. You can get into the container and check the environment in this way.
+```bash
+singularity shell --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference circRIP.sif
+source activate circRIP
+```

@@ -16,6 +16,7 @@ dependencies:
   - ucsc-genepredtogtf
   - bowtie2=2.4.2
   - bedtools=2.26.0
+  - STAR=2.7.5a
   - pip
   - git
   
