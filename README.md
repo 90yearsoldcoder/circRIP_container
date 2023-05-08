@@ -20,10 +20,29 @@ cd circRIP_container
 singularity build --fakeroot circRIP.sif circRIP.def
 ```
 
-
-# Run container in SHELL mode(for developer)
+## Run container in SHELL mode(for developer)
 It is used for debugging and debuging only. You can get into the container and check the environment in this way.
 ```bash
 singularity shell --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference circRIP.sif
 source activate circRIP
 ```
+
+# perform circlexplore3
+follow the circlexplore3 singularity instruct to generate the result
+```
+https://github.com/90yearsoldcoder/circlexplore3_pipeline.git
+```
+
+The result folder should contain four folders: 
+``` circ ``` 
+``` fusion ```
+``` hisat ```
+``` quant ```
+
+# process the circlexplore3 result
+Assume the result is at ``` path/to/result ```
+Then run the circ3postprocess.py to copy the neccessary files and modify them
+```bash
+python circ3postprocess.py <sample_name>  path/to/result
+```
+The processed files are all in ``` current/path/inputdata ```
