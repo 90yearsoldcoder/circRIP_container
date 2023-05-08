@@ -24,7 +24,18 @@ singularity build --fakeroot circRIP.sif circRIP.def
 It is used for debugging and debuging only. You can get into the container and check the environment in this way.
 ```bash
 singularity shell --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference circRIP.sif
+```
+
+And activate the conda environment
+```
 source activate circRIP
+```
+
+Command line for test
+```
+python circRIP.py EnrichedcircRNA -ip_circ inputdata/WB_LJ_PS_EX2_49_S49_L001.circ -input_circ inputdata/WB_LJ_PS_EX2_33_S33_L001.circ -gtf /reference/gencode.v40.annotation.gtf \
+                  -ip_bam inputdata/WB_LJ_PS_EX2_49_S49_L001.bam -input_bam inputdata/WB_LJ_PS_EX2_33_S33_L001.bam -prefix test.final.out \
+		          -G /reference/GRCh38.primary_assembly.genome.fa
 ```
 
 # perform circlexplore3
