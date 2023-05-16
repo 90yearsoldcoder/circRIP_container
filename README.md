@@ -39,7 +39,7 @@ python circRIP.py EnrichedcircRNA -ip_circ inputdata/WB_LJ_PS_EX2_49_S49_L001.ci
 ```
 
 # 1. perform circlexplore3
-follow the circlexplore3 singularity instruct to generate the result
+follow the circlexplore3 singularity instruction to generate the result
 ```
 https://github.com/90yearsoldcoder/circlexplore3_pipeline.git
 ```
@@ -63,7 +63,7 @@ The processed files will be in ``` current/path/inputdata ```
 
 ## 2.2 For a batch of samples
 ### 2.2.1 prepare a file list
-The ```list.csv``` should be in current path(circRIP_container/list.csv) /
+The ```list.csv``` should be in current path(circRIP_container/list.csv) \
 Format is below:
 
 | Input_result_folder | Input_sample_name        | IP_result_folder | IP_sample_name         | Pair_name |
@@ -97,6 +97,6 @@ qsub circRIPsingle.qsub <input_name> <ip_name> <Pair_name>
 ## 3.2 Run for a batch of of samples
 The ```list.csv```same as the above one is required 
 ```
-bash circRIPbatch.qsub list.csv
+bash circRIPbatch.sh list.csv
 ```
 
