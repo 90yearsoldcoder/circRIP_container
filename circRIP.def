@@ -38,7 +38,7 @@ Stage: build
     echo "conda activate circRIP" >> $SINGULARITY_ENVIRONMENT
     
     # download circRIP
-    git clone https://github.com/bioinfolabwhu/circRIP.git
+    git clone https://github.com/90yearsoldcoder/circRIP.git
     
     NOW=`date`
     echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
@@ -46,14 +46,30 @@ Stage: build
 %runscript
     echo "Container was created $NOW"
     echo "Arguments received: $*"
-    echo "Inputdata Name: ${1}"
+    echo "Input seq file: ${1}"
+    echo "Ip seq file:${2}"
+    echo "Pair name:${3}"
     
     # check conda environment
     conda env list
     
-    # activate conda environment
-    # source activate circRIP
-    # echo "Conda environment ready"
+    cd /result
+    
+    # run circRIP
+    echo "Performing circRIP on ${3}"
+    now=$(date +"%T")
+    echo "Current time : $now"
+    python /circRIP/circRIP.py EnrichedcircRNA -ip_circ /inputdata/${2}.circ \
+                                                -input_circ /inputdata/${1}.circ \
+                                                -gtf /reference/gencode.v40.annotation.gtf \
+                                                -ip_bam /inputdata/${2}.bam \
+                                                -input_bam /inputdata/${1}.bam \
+                                                -prefix ${3}.final.out \
+                                                -G /reference/GRCh38.primary_assembly.genome.fa
+    echo "circRIP.py done"
+    now=$(date +"%T")
+    echo "Current time : $now"
+
 
 %startscript
     nc -lp $LISTEN_PORT
