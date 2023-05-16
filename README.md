@@ -52,17 +52,18 @@ The result folder should contain four folders:
 
 # 2. process the circlexplore3 result
 
-## 2.1 Only For one single file(otherwise, go to 2.2)
+## 2.1 Only For one pair sample(otherwise, go to 2.2)
 Assume the result is at ``` path/to/result ```
 Then run the circ3postprocess.py to copy the neccessary files and modify them
 ```bash
-python circ3postprocess.py -n <sample_name>  -p path/to/result
+python circ3postprocess.py -n <sample_name1>  -p path/to/result1
+python circ3postprocess.py -n <sample_name2>  -p path/to/result2
 ```
 The processed files will be in ``` current/path/inputdata ```
 
-## 2.2 For a batch file
-### 2.2.1 prepare a list file
-The ```list.csv``` should be in current path(circRIP_container)
+## 2.2 For a batch of samples
+### 2.2.1 prepare a file list
+The ```list.csv``` should be in current path(circRIP_container/list.csv) /
 Format is below:
 
 | Input_result_folder | Input_sample_name        | IP_result_folder | IP_sample_name         | Pair_name |
@@ -86,4 +87,16 @@ bash circ3postprocess.sh list.csv
 ```
 The processed files will be in ``` current/path/inputdata ```
 
+# 3. run the Singularity
+## 3.1 Run for only one pair of samples
+
+```
+qsub circRIPsingle.qsub <input_name> <ip_name> <Pair_name>
+```
+
+## 3.2 Run for a batch of of samples
+The ```list.csv```same as the above one is required 
+```
+bash circRIPbatch.qsub list.csv
+```
 
