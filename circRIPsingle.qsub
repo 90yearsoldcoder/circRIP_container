@@ -1,0 +1,11 @@
+#!/bin/bash -l
+#$ -P   casa
+#$ -cwd 
+#$ -pe omp 4
+
+input_name=${1}
+ip_name=${2}
+pair=${3}
+
+echo "input sample is ${input_name}, ip sample is ${ip_name}, pair name is ${pair}"
+singularity run --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference circRIP.sif ${input_name} ${ip_name} ${pair}
