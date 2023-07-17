@@ -7,6 +7,10 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
+#trans the list.csv to unix format
+echo "convert the list.csv to unix format"
+dos2unix ${1}
+
 # read the file line by line
 while IFS=',' read -r col1 col2 col3 col4 col5
 do
