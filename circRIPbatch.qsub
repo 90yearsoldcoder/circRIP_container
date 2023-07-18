@@ -1,0 +1,17 @@
+#!/bin/bash -l
+#$ -P   casa
+#$ -l h_rt=60:00:00
+#$ -N cirRIP_task
+#$ -cwd 
+#$ -pe omp 4
+#$ -tc 5
+
+line_number=${SGE_TASK_ID}
+((line_number++))
+
+input_name=$(sed -n "${line_number}p" $1 | cut -d ',' -f 2)
+ip_name=$(sed -n "${line_number}p" $1 | cut -d ',' -f 4)
+pair=$(sed -n "${line_number}p" $1 | cut -d ',' -f 5)
+
+echo "input sample is ${input_name}, ip sample is ${ip_name}, pair name is ${pair}"
+singularity run --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference circRIP.sif ${input_name} ${ip_name} ${pair}

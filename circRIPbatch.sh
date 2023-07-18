@@ -1,18 +1,11 @@
-#!/bin/bash
+#!/bin/bash -l
+#bash start.sh list.csv
 
-# check if file name is passed as an argument
-if [ $# -eq 0 ]; then
-    echo "No arguments provided"
-    echo "Usage: ./scriptname filename"
-    exit 1
-fi
+nsamples=$(wc -l < ${1})
+((nsamples--))
 
-# read the file line by line
-while IFS=',' read -r col1 col2 col3 col4 col5
-do
-  if [ "$col1" != "Input_result_folder" ]; then
-    echo "Submit task for: $col5"
-    qsub circRIPsingle.qsub $col2 $col4 $col5
-    echo "---------------------------------"
-  fi
-done < "$1"
+echo "prepare result folder"
+mkdir -p ./result
+
+echo "The number of samples is ${nsamples}"
+qsub -t 1-${nsamples} circRIPbatch.qsub ${1}
